@@ -1,0 +1,140 @@
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1b5e20, #388e3c);
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 4rem 1rem 3rem;
+  position: relative;
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(27, 94, 32, 0.9);
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  z-index: 1000;
+}
+
+nav a {
+  color: #a5d6a7;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: color 0.3s ease;
+}
+
+nav a:hover,
+nav a.active {
+  color: #e8f5e9;
+  border-bottom: 2px solid #e8f5e9;
+}
+
+h1 {
+  font-size: 3rem;
+  margin: 0.5rem 0 0.2rem;
+  text-shadow: 0 0 10px #2e7d32;
+}
+
+p {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  text-shadow: 0 0 5px #2e7d32;
+  max-width: 600px;
+}
+
+button {
+  background-color: #4caf50;
+  border: none;
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #357a38;
+}
+
+footer {
+  margin-top: auto;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  color: #c8e6c9;
+  text-shadow: none;
+}
+
+a {
+  color: #a5d6a7;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #e8f5e9;
+}
+
+/* Botão WhatsApp fixo */
+.whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: white;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 0.3s ease;
+  text-decoration: none;
+  z-index: 1001;
+}
+
+.whatsapp-btn:hover {
+  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.8);
+  filter: drop-shadow(0 0 6px #25d366);
+}
+
+/* Sobre page adjustments */
+body[data-page="sobre"] {
+  background: #e8f5e9;
+  color: #2e7d32;
+  justify-content: flex-start;
+  padding: 4rem 1rem 3rem;
+}
+
+body[data-page="sobre"] h1 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+body[data-page="sobre"] ul {
+  max-width: 700px;
+  margin: 1rem auto 2rem auto;
+  padding-left: 1.2rem;
+  list-style-type: square;
+  font-size: 1.1rem;
+  color: #2e7d32;
+}
+
+body[data-page="sobre"] a {
+  color: #1b5e20;
+}
