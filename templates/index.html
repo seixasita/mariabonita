@@ -1,11 +1,29 @@
-
 {% extends "base.html" %}
 
 {% block content %}
-  <h1>🌿 Fazenda Maria Bonita</h1>
-  <p>Sistema de gestão rural moderno e eficiente com <strong>INOVAÇÃO E SUSTENTABILIDADE</strong></p>
-  <button onclick="alert('Bem-vindo à Fazenda Maria Bonita!')">Clique aqui!!!</button>
-  <footer>
-    <p>Quer saber mais? <a href="/sobre">Clique aqui para conhecer a fazenda</a></p>
-  </footer>
+  <section class="hero">
+    <div class="hero-content">
+      <h1>🌿 Fazenda Maria Bonita</h1>
+      <p>
+        Transformando a gestão rural com tecnologia e sustentabilidade.<br />
+        Sua oportunidade de investimento em inovação agro.
+      </p>
+      <a href="#investimento" class="cta-btn">Conheça o projeto</a>
+    </div>
+  </section>
+
+  <section id="investimento" class="investment-section">
+    <h2>Por que investir na Fazenda Maria Bonita?</h2>
+    <p>
+      Somos um sistema de gestão rural integrado que combina tecnologia de ponta e práticas sustentáveis para
+      aumentar eficiência e rentabilidade no campo. Nosso foco é gerar valor para produtores e investidores.
+    </p>
+    <ul>
+      <li>Controle digital preciso do rebanho e insumos</li>
+      <li>Relatórios estratégicos para decisões inteligentes</li>
+      <li>Gestão financeira que maximiza lucro</li>
+      <li>Compromisso ambiental e social para sustentabilidade real</li>
+    </ul>
+    <a href="/sobre" class="secondary-btn">Saiba mais sobre nós</a>
+  </section>
 {% endblock %}

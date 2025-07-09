@@ -1,140 +1,161 @@
-
 body {
-  margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
   background: linear-gradient(135deg, #1b5e20, #388e3c);
   color: white;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  text-align: center;
-  padding: 4rem 1rem 3rem;
-  position: relative;
+  scroll-behavior: smooth;
 }
 
 nav {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  background: rgba(27, 94, 32, 0.9);
-  padding: 0.5rem 1rem;
+  background-color: rgba(0,0,0,0.3);
+  padding: 1rem 2rem;
   display: flex;
-  justify-content: center;
-  gap: 2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  z-index: 1000;
+  gap: 1.5rem;
+  font-weight: 600;
 }
 
 nav a {
   color: #a5d6a7;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1.1rem;
   transition: color 0.3s ease;
 }
 
-nav a:hover,
-nav a.active {
+nav a.active, nav a:hover {
   color: #e8f5e9;
-  border-bottom: 2px solid #e8f5e9;
 }
 
-h1 {
-  font-size: 3rem;
-  margin: 0.5rem 0 0.2rem;
+.hero {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.hero-content {
+  max-width: 700px;
+}
+
+.hero h1 {
+  font-size: 4rem;
+  margin-bottom: 1rem;
   text-shadow: 0 0 10px #2e7d32;
 }
 
-p {
-  font-size: 1.25rem;
-  margin-top: 0;
-  margin-bottom: 2rem;
-  text-shadow: 0 0 5px #2e7d32;
-  max-width: 600px;
+.hero p {
+  font-size: 1.5rem;
+  margin-bottom: 2.5rem;
+  text-shadow: 0 0 6px #2e7d32;
 }
 
-button {
+.cta-btn {
+  display: inline-block;
   background-color: #4caf50;
-  border: none;
   color: white;
-  padding: 1rem 2rem;
-  font-size: 1.1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: background-color 0.3s ease;
+  padding: 1rem 3rem;
+  border-radius: 0.6rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-button:hover {
+.cta-btn:hover, .cta-btn:focus {
   background-color: #357a38;
+  transform: scale(1.05);
+  outline: none;
+}
+
+.investment-section {
+  background: white;
+  color: #2e7d32;
+  padding: 4rem 2rem;
+  max-width: 900px;
+  margin: 0 auto 4rem auto;
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+  font-weight: 600;
+}
+
+.investment-section h2 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.investment-section p {
+  font-size: 1.2rem;
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
+  font-weight: 400;
+}
+
+.investment-section ul {
+  max-width: 600px;
+  margin: 0 auto 3rem auto;
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  font-weight: 400;
+  font-size: 1.1rem;
+  color: #145214;
+}
+
+.secondary-btn {
+  display: inline-block;
+  background-color: #1b5e20;
+  color: white;
+  padding: 0.8rem 2.5rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 0 auto;
+  display: block;
+  width: max-content;
+}
+
+.secondary-btn:hover, .secondary-btn:focus {
+  background-color: #145214;
+  transform: scale(1.05);
+  outline: none;
 }
 
 footer {
-  margin-top: auto;
-  padding: 1rem 0;
-  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
   color: #c8e6c9;
-  text-shadow: none;
+  font-size: 0.9rem;
+  background-color: rgba(0,0,0,0.15);
+  user-select: none;
+  letter-spacing: 0.04em;
 }
 
-a {
-  color: #a5d6a7;
-  text-decoration: none;
-  font-weight: bold;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: #e8f5e9;
-}
-
-/* Botão WhatsApp fixo */
+/* WhatsApp button fixed bottom right */
 .whatsapp-btn {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: white;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  background: #25d366;
   border-radius: 50%;
   width: 56px;
   height: 56px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   display: flex;
-  align-items: center;
   justify-content: center;
-  transition: box-shadow 0.3s ease;
-  text-decoration: none;
-  z-index: 1001;
+  align-items: center;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease;
+  cursor: pointer;
 }
 
 .whatsapp-btn:hover {
-  box-shadow: 0 6px 18px rgba(37, 211, 102, 0.8);
-  filter: drop-shadow(0 0 6px #25d366);
+  background-color: #1ebe57;
 }
 
-/* Sobre page adjustments */
-body[data-page="sobre"] {
-  background: #e8f5e9;
-  color: #2e7d32;
-  justify-content: flex-start;
-  padding: 4rem 1rem 3rem;
-}
-
-body[data-page="sobre"] h1 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-body[data-page="sobre"] ul {
-  max-width: 700px;
-  margin: 1rem auto 2rem auto;
-  padding-left: 1.2rem;
-  list-style-type: square;
-  font-size: 1.1rem;
-  color: #2e7d32;
-}
-
-body[data-page="sobre"] a {
-  color: #1b5e20;
+.whatsapp-btn svg {
+  fill: white;
+  width: 28px;
+  height: 28px;
 }

@@ -26,3 +26,11 @@ async def sobre(request: Request):
         "whatsapp_number": WHATSAPP_NUMBER,
         "page": "sobre"
     })
+
+@app.get("/cadastro", response_class=HTMLResponse)
+async def cadastro(request: Request):
+    return templates.TemplateResponse("cadastro.html", {
+        "request": request,
+        "whatsapp_number": WHATSAPP_NUMBER,
+        "page": "cadastro"
+    })
