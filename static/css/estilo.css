@@ -31,25 +31,27 @@ footer {
   flex-shrink: 0;
 }
 
-/* Botão flutuante do WhatsApp */
 .whatsapp-float {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #25D366;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366; /* verde WhatsApp */
   color: white;
-  border-radius: 50%;
-  width: 56px;
-  height: 56px;
+  border-radius: 50px;
+  text-align: center;
+  font-size: 35px;
+  box-shadow: 2px 2px 3px #999;
+  z-index: 1000;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  transition: transform 0.2s ease;
+  transition: background-color 0.3s;
 }
 
 .whatsapp-float:hover {
-  transform: scale(1.1);
+  background-color: #128c4a;
+  color: white;
+  text-decoration: none;
 }
