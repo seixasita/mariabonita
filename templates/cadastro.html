@@ -1,54 +1,64 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastro - Fazenda Maria Bonita</title>
-    <link rel="stylesheet" href="/static/style.css">
-    <style>
-        body {
-            font-family: sans-serif;
-            padding: 2rem;
-            background-color: #f3f4f6;
-        }
-        .form-box {
-            background: white;
-            padding: 2rem;
-            border-radius: 8px;
-            max-width: 400px;
-            margin: 0 auto;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        input {
-            width: 100%;
-            padding: 0.75rem;
-            margin: 0.5rem 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-        }
-        button {
-            width: 100%;
-            padding: 0.75rem;
-            background-color: #10b981;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-    <div class="form-box">
-        <h2>Cadastro</h2>
-        <form method="POST" action="#">
-            <label for="usuario">Usuário</label>
-            <input type="text" id="usuario" name="usuario" placeholder="Digite seu usuário" required>
+{% extends "base.html" %}
+{% block content %}
+<h2>Cadastro de Novo Usuário</h2>
+{% if erro %}
+  <div class="alert alert-danger">{{ erro }}</div>
+{% endif %}
+<form method="post" onsubmit="return validarFormulario()">
+  <div class="mb-3">
+    <label class="form-label">Nome Completo</label>
+    <input type="text" class="form-control" name="nome_completo" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">E-mail</label>
+    <input type="email" class="form-control" name="email" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">CPF</label>
+    <input type="text" class="form-control" name="cpf" id="cpf" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Data de Nascimento</label>
+    <input type="date" class="form-control" name="data_nascimento" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Nome de Usuário</label>
+    <input type="text" class="form-control" name="username" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Senha</label>
+    <input type="password" class="form-control" name="senha" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Confirme a Senha</label>
+    <input type="password" class="form-control" name="senha2" required>
+  </div>
+  <button type="submit" class="btn btn-success">Cadastrar</button>
+</form>
 
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+<script>
+function validarCPF(cpf) {
+  cpf = cpf.replace(/[^\d]+/g,'');
+  if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+  let soma = 0, resto;
+  for (let i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i-1, i)) * (11 - i);
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(cpf.substring(9, 10))) return false;
+  soma = 0;
+  for (let i = 1; i <= 10; i++) soma += parseInt(cpf.substring(i-1, i)) * (12 - i);
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  return resto === parseInt(cpf.substring(10, 11));
+}
 
-            <button type="submit">Cadastrar</button>
-        </form>
-    </div>
-</body>
-</html>
+function validarFormulario() {
+  const cpf = document.getElementById("cpf").value;
+  if (!validarCPF(cpf)) {
+    alert("CPF inválido!");
+    return false;
+  }
+  return true;
+}
+</script>
+{% endblock %}

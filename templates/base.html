@@ -1,30 +1,59 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🌿 Fazenda Maria Bonita</title>
-  <link rel="stylesheet" href="/static/style.css" />
+  <title>Fazenda Inteligente</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+
+  <!-- CSS customizado -->
+   <link href="{{ request.url_for('static', path='css/estilo.css') }}" rel="stylesheet" />
 </head>
-<body data-page="{{ page }}">
-  <nav>
-    <a href="/" class="{% if page == 'home' %}active{% endif %}">Home</a>
-    <a href="/sobre" class="{% if page == 'sobre' %}active{% endif %}">Sobre</a>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center fw-bold" href="/">
+        <img src="{{ request.url_for('static', path='img/milho.svg') }}" alt="Logo Fazenda" width="36" height="36" class="me-2" />
+        
+        Fazenda Inteligente
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu"
+        aria-controls="navbarMenu" aria-expanded="false" aria-label="Alternar navegação">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item"><a class="nav-link" href="/">Início</a></li>
+          <li class="nav-item"><a class="nav-link" href="/sobre">Sobre</a></li>
+          <li class="nav-item"><a class="nav-link" href="/cadastro">Cadastro</a></li>
+          <li class="nav-item"><a class="nav-link" href="/noticias">Notícias</a></li>
+          <li class="nav-item"><a class="nav-link" href="/login">Login</a></li>
+        </ul>
+      </div>
+    </div>
   </nav>
 
-  <main>
+  <main class="container">
     {% block content %}{% endblock %}
   </main>
 
-  <footer>
-    <p>© 2025 Fazenda Maria Bonita</p>
-  </footer>
-
-  <a href="https://wa.me/{{ whatsapp_number }}" target="_blank" aria-label="WhatsApp" class="whatsapp-btn" title="Fale conosco no WhatsApp">
-    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20.52 3.48A11.91 11.91 0 0012 0C5.37 0 0 5.37 0 12a11.9 11.9 0 001.64 6L0 24l6-1.64A11.91 11.91 0 0024 12c0-3.18-1.24-6.18-3.48-8.52zm-8.14 16.58a9.21 9.21 0 01-4.96-1.42l-.35-.21-3.07.82.82-3.01-.22-.34a9.21 9.21 0 1111.89 4.16 9.04 9.04 0 01-4.11.98z"/>
-      <path d="M17.2 14.5c-.29-.15-1.72-.85-1.98-.95s-.46-.14-.66.15-.75.95-.92 1.15-.34.22-.63.07a8.19 8.19 0 01-2.41-1.48 9.2 9.2 0 01-1.7-2.11c-.18-.29 0-.44.13-.59s.29-.34.44-.5a1.37 1.37 0 00.21-.35.38.38 0 000-.35c-.07-.15-.66-1.6-.9-2.2s-.48-.5-.66-.5-.48-.06-.74-.06a1.11 1.11 0 00-.8.38c-.27.29-1.03 1.01-1.03 2.48s1.05 2.87 1.2 3.07a15.9 15.9 0 002.75 3.62 12.33 12.33 0 004.26 2.66c.6.25 1.07.2 1.47.12a4.8 4.8 0 001.54-.95 5.9 5.9 0 001.9-4.14c0-.25-.21-.38-.47-.54z"/>
-    </svg>
+  <!-- Botão WhatsApp flutuante -->
+  <a href="https://wa.me/5511999999999" target="_blank" rel="noopener" aria-label="WhatsApp da Fazenda" class="whatsapp-float">
+    <i class="bi bi-whatsapp"></i>
   </a>
+
+  <footer class="bg-light text-center text-muted py-3 border-top mt-auto">
+    <div class="container">
+      <small>&copy; Fazenda Inteligente 2025. Todos os direitos reservados.</small>
+    </div>
+  </footer>
+  
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

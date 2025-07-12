@@ -1,0 +1,55 @@
+/* Altura mínima da página e fundo suave */
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: #f0f8f4; /* Verde pastel suave */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+/* Flexbox para manter rodapé no fim */
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Conteúdo principal com visual mais aconchegante */
+main.container {
+  flex: 1 0 auto;
+  padding: 2rem;
+  max-width: 960px;
+  background-color: #fdfdf5; /* Bege muito claro */
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Rodapé fixado na base */
+footer {
+  flex-shrink: 0;
+}
+
+/* Botão flutuante do WhatsApp */
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366;
+  color: white;
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  transition: transform 0.2s ease;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.1);
+}
