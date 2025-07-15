@@ -1,5 +1,10 @@
-{% extends "base.html" %}
+<!-- templates/cadastro.html -->
+{% extends "clean_base.html" %}
+
+{% block title %}Cadastro{% endblock %}
+
 {% block content %}
+
 <h2>Cadastro de Usuário</h2>
 {% if error %}
 <div class="alert alert-danger">{{ error }}</div>
@@ -29,7 +34,8 @@
     <label for="confirm_password" class="form-label">Confirme a Senha</label>
     <input type="password" class="form-control" id="confirm_password" name="confirm_password" required minlength="6">
   </div>
-  <button type="submit" class="btn btn-outline-success d-inline-flex align-items-center gap-2">Cadastrar</button>
+  
+  <button type="submit" class="btn btn-success w-100">Cadastrar</button>
   
 </form>
 {% endblock %}

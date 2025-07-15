@@ -1,36 +1,169 @@
 {% extends "base.html" %}
 
-{% block content %}
-<div class="container mt-4">
+{% block title %}Início{% endblock %}
 
-  <!-- Mensagem de sucesso -->
-  {% if request.session.get("mensagem") %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      {{ request.session.mensagem }}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+{% block fullwidth %}
+
+<!-- Hero Section (fora da div.container) -->
+
+<section id="hero" class="hero accent-background">
+
+  <div id="hero-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+
+    <div class="carousel-item active">
+      <img src="/static/assets/img/hero-carousel/hero-carousel-1.jpg" alt="">
+      <div class="carousel-container">
+        <h2>Bem-vindo à Maria Bonita</h2>
+        <p>Gestão inteligente do campo com simplicidade, tecnologia e tradição.</p>
+        <a href="#featured-services" class="btn-get-started">Começar</a>
+      </div>
     </div>
-    {% set _ = request.session.update({'mensagem': None}) %}
-  {% endif %}
 
-  <h1>Bem-vindo à Fazenda Maria Bonita</h1>
+    <div class="carousel-item">
+      <img src="/static/assets/img/hero-carousel/hero-carousel-2.jpg" alt="">
+      <div class="carousel-container">
+        <h2>Controle de Despesas</h2>
+        <p>Visualize todos os custos da fazenda de forma clara e rápida.</p>
+        <a href="#featured-services" class="btn-get-started">Começar</a>
+      </div>
+    </div>
 
+    <div class="carousel-item">
+      <img src="/static/assets/img/hero-carousel/hero-carousel-3.jpg" alt="">
+      <div class="carousel-container">
+        <h2>Relatórios Inteligentes</h2>
+        <p>Tome decisões com base em dados reais do seu negócio rural.</p>
+        <a href="#featured-services" class="btn-get-started">Começar</a>
+      </div>
+    </div>
+
+    <a class="carousel-control-prev" href="#hero-carousel" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon bi bi-chevron-left" aria-hidden="true"></span>
+    </a>
+    <a class="carousel-control-next" href="#hero-carousel" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon bi bi-chevron-right" aria-hidden="true"></span>
+    </a>
+
+    <ol class="carousel-indicators">
+      <li data-bs-target="#hero-carousel" data-bs-slide-to="0" class="active"></li>
+      <li data-bs-target="#hero-carousel" data-bs-slide-to="1"></li>
+      <li data-bs-target="#hero-carousel" data-bs-slide-to="2"></li>
+    </ol>
+
+  </div>
+</section>
+{% endblock %}
+{% block content %}
+<!-- Featured Services Section -->
+    <section id="featured-services" class="featured-services section light-background">
+
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-activity icon"></i></div>
+              <h4><a href="" class="stretched-link">Lorem Ipsum</a></h4>
+              <p>Voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
+              <h4><a href="" class="stretched-link">Sed ut perspici</a></h4>
+              <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
+              <h4><a href="" class="stretched-link">Magni Dolores</a></h4>
+              <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia</p>
+            </div>
+          </div><!-- End Service Item -->
+
+          <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+            <div class="service-item position-relative">
+              <div class="icon"><i class="bi bi-broadcast icon"></i></div>
+              <h4><a href="" class="stretched-link">Nemo Enim</a></h4>
+              <p>At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis</p>
+            </div>
+          </div><!-- End Service Item -->
+
+        </div>
+
+      </div>
+
+    </section><!-- /Featured Services Section -->
+
+<!-- About Section -->
+    <section id="about" class="about section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>About Us</h2>
+        <p>Somos apaixonados por inovação no campo.</p>
+      </div><!-- End Section Title -->
+
+      <div class="container">
+
+        <div class="row gy-4">
+          <div class="col-lg-6 position-relative align-self-start" data-aos="fade-up" data-aos-delay="100">
+            <img src="assets/img/about.jpg" class="img-fluid" alt="">
+            <a href="https://www.youtube.com/watch?v=iL7Ve__7yXE&list=RDEMrdjiVVlBw0MzeF6PtJumFQ&index=3" class="glightbox pulsating-play-btn"></a>
+          </div>
+          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
+            <h3>A <strong>Fazenda Maria Bonita</strong> nasceu para ajudar pequenos e médios produtores a usarem a tecnologia para melhorar a gestão de suas propriedades.</h3>
+            <p class="fst-italic">
+              Nosso sistema é simples, leve e pensado para funcionar bem até com conexão lenta.
+            </p>
+            <ul>
+              <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat.</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>Duis aute irure dolor in reprehenderit in voluptate velit.</span></li>
+              <li><i class="bi bi-check2-all"></i> <span>Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span></li>
+            </ul>
+            <p>
+              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+    </section><!-- /About Section -->
+
+<!-- Resto da página -->
+<!-- Mensagens -->
+{% if request.session.get("mensagem") %}
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ request.session.mensagem }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
+  </div>
+  {% set _ = request.session.update({'mensagem': None}) %}
+{% endif %}
+
+<!-- Área de Login ou Boas-vindas -->
+<div class="my-4 text-center">
   {% if user %}
-    <p>Você está logado como <strong>{{ user.name }}</strong> (CPF: {{ user.cpf }})</p>
+    <p class="lead">Você está logado como <strong>{{ user.name }}</strong> (CPF: {{ user.cpf }})</p>
   {% else %}
-    <p>Por favor, faça login ou cadastre-se para continuar.</p>
+    <p class="lead">Por favor, faça login ou cadastre-se para continuar.</p>
 
-    <div class="d-flex flex-column gap-3 mt-4">
+    <div class="d-flex justify-content-center gap-3 mt-3">
       <a href="/login" class="btn btn-success d-inline-flex align-items-center gap-2">
         <i class="bi bi-box-arrow-in-right"></i>
         Login
       </a>
-
       <a href="/cadastro" class="btn btn-outline-success d-inline-flex align-items-center gap-2">
         <i class="bi bi-person-plus"></i>
         Criar conta
       </a>
     </div>
   {% endif %}
-
 </div>
+
 {% endblock %}

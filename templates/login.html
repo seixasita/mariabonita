@@ -1,18 +1,23 @@
-{% extends "base.html" %}
+{% extends "clean_base.html" %}
+
+{% block title %}Login{% endblock %}
+
 {% block content %}
-<h2>Login</h2>
-{% if error %}
-<div class="alert alert-danger">{{ error }}</div>
-{% endif %}
-<form method="post" action="/login">
-  <div class="mb-3">
-    <label for="cpf" class="form-label">CPF</label>
-    <input type="text" class="form-control" id="cpf" name="cpf" required pattern="\d{11}" title="Apenas números, 11 dígitos">
-  </div>
-  <div class="mb-3">
-    <label for="password" class="form-label">Senha</label>
-    <input type="password" class="form-control" id="password" name="password" required minlength="6">
-  </div>
-  <button type="submit" class="btn btn-outline-success d-inline-flex align-items-center gap-2">Entrar</button>
-</form>
+<div class="col-md-4 offset-md-4">
+  <h2>Login</h2>
+  {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+  {% endif %}
+  <form method="post" action="/login">
+    <div class="mb-3">
+      <label for="username" class="form-label">Usuário</label>
+      <input type="text" name="username" class="form-control" required>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Senha</label>
+      <input type="password" name="password" class="form-control" required>
+    </div>
+    <button type="submit" class="btn btn-success w-100">Entrar</button>
+  </form>
+</div>
 {% endblock %}
