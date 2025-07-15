@@ -1,106 +1,118 @@
-from fastapi import FastAPI, Request, Form
+from fastapi import FastAPI, Request, Form, Depends, status
 from fastapi.responses import HTMLResponse, RedirectResponse
-from fastapi.staticfiles import StaticFiles
-from jinja2 import Environment, FileSystemLoader, select_autoescape
 from fastapi.templating import Jinja2Templates
-from datetime import datetime
-import csv
-import os
+from fastapi.staticfiles import StaticFiles
+from pydantic import BaseModel, EmailStr
+from passlib.context import CryptContext
+from starlette.middleware.sessions import SessionMiddleware
+import sqlite3
+import re
 
 app = FastAPI()
-
-# Serve static files (CSS, JS, images)
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
-# Jinja2 config com variável global now()
-env = Environment(
-    loader=FileSystemLoader("templates"),
-    autoescape=select_autoescape(["html", "xml"])
-)
-env.globals["now"] = datetime.now
+app.add_middleware(SessionMiddleware, secret_key="supersecretkey")
 
 templates = Jinja2Templates(directory="templates")
-templates.env = env
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-CSV_FILE = "usuarios.csv"
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+def get_db():
+    conn = sqlite3.connect("users.db")
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def create_user_table():
+    conn = get_db()
+    conn.execute(
+        "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, cpf TEXT UNIQUE, name TEXT, email TEXT UNIQUE, birthdate TEXT, password TEXT)"
+    )
+    conn.commit()
+    conn.close()
+
+create_user_table()
+
+def verify_cpf(cpf: str) -> bool:
+    cpf = re.sub(r'[^0-9]', '', cpf)
+    if len(cpf) != 11:
+        return False
+    if cpf == cpf[0] * 11:
+        return False
+    # Validação básica do CPF
+    def calc_digit(digs):
+        s = sum((len(digs)+1 - i)*int(v) for i,v in enumerate(digs))
+        r = 11 - s % 11
+        return r if r < 10 else 0
+    d1 = calc_digit(cpf[:9])
+    d2 = calc_digit(cpf[:9] + str(d1))
+    return cpf[-2:] == f"{d1}{d2}"
 
 @app.get("/", response_class=HTMLResponse)
-async def index(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
-
-@app.get("/sobre", response_class=HTMLResponse)
-async def sobre(request: Request):
-    return templates.TemplateResponse("sobre.html", {"request": request})
-
-@app.get("/noticias", response_class=HTMLResponse)
-async def noticias(request: Request):
-    return templates.TemplateResponse("noticias.html", {"request": request})
+def home(request: Request):
+    user = request.session.get("user")
+    return templates.TemplateResponse("index.html", {"request": request, "user": user})
 
 @app.get("/cadastro", response_class=HTMLResponse)
-async def cadastro_get(request: Request):
-    return templates.TemplateResponse("cadastro.html", {"request": request, "erro": None})
+def cadastro_form(request: Request):
+    return templates.TemplateResponse("cadastro.html", {"request": request, "error": None})
 
 @app.post("/cadastro", response_class=HTMLResponse)
-async def cadastro_post(
-    request: Request,
-    nome_completo: str = Form(...),
-    email: str = Form(...),
-    cpf: str = Form(...),
-    data_nascimento: str = Form(...),
-    username: str = Form(...),
-    senha: str = Form(...),
-    senha2: str = Form(...)
-):
-    erros = []
-    if senha != senha2:
-        erros.append("As senhas não coincidem.")
-    # Aqui pode adicionar validações extras
+def cadastro(request: Request,
+             cpf: str = Form(...),
+             name: str = Form(...),
+             email: EmailStr = Form(...),
+             birthdate: str = Form(...),
+             password: str = Form(...),
+             confirm_password: str = Form(...)):
 
-    if erros:
-        return templates.TemplateResponse("cadastro.html", {"request": request, "erro": erros})
+    if not verify_cpf(cpf):
+        return templates.TemplateResponse("cadastro.html", {"request": request, "error": "CPF inválido."})
+    if password != confirm_password:
+        return templates.TemplateResponse("cadastro.html", {"request": request, "error": "As senhas não conferem."})
 
-    existe = os.path.isfile(CSV_FILE)
-    with open(CSV_FILE, mode="a", newline="", encoding="utf-8") as f:
-        writer = csv.DictWriter(f, fieldnames=["nome_completo", "email", "cpf", "data_nascimento", "username", "senha"])
-        if not existe:
-            writer.writeheader()
-        writer.writerow({
-            "nome_completo": nome_completo,
-            "email": email,
-            "cpf": cpf,
-            "data_nascimento": data_nascimento,
-            "username": username,
-            "senha": senha,
-        })
+    hashed_password = pwd_context.hash(password)
 
-    return RedirectResponse("/sucesso", status_code=303)
-
+    conn = get_db()
+    try:
+        conn.execute("INSERT INTO users (cpf, name, email, birthdate, password) VALUES (?, ?, ?, ?, ?)",
+                     (cpf, name, email, birthdate, hashed_password))
+        conn.commit()
+    except sqlite3.IntegrityError:
+        return templates.TemplateResponse("cadastro.html", {"request": request, "error": "CPF ou email já cadastrado."})
+    finally:
+        conn.close()
+    # se sucesso
+    return RedirectResponse(url="/sucesso", status_code=status.HTTP_303_SEE_OTHER)
+    
 @app.get("/sucesso", response_class=HTMLResponse)
-async def sucesso(request: Request):
-    return templates.TemplateResponse("sucesso.html", {"request": request})
+def sucesso(request: Request):
+    return templates.TemplateResponse("sucesso.html", {"request": request, "mensagem": "Cadastro realizado com sucesso! Agora faça login."})
+
 
 @app.get("/login", response_class=HTMLResponse)
-async def login_get(request: Request):
-    return templates.TemplateResponse("login.html", {"request": request, "erro": None})
+def login_form(request: Request):
+    return templates.TemplateResponse("login.html", {"request": request, "error": None})
 
 @app.post("/login", response_class=HTMLResponse)
-async def login_post(request: Request, username: str = Form(...), senha: str = Form(...)):
-    usuario_encontrado = False
-    senha_correta = False
+def login(request: Request, cpf: str = Form(...), password: str = Form(...)):
+    conn = get_db()
+    user = conn.execute("SELECT * FROM users WHERE cpf = ?", (cpf,)).fetchone()
+    conn.close()
+    if not user or not pwd_context.verify(password, user["password"]):
+        return templates.TemplateResponse("login.html", {"request": request, "error": "CPF ou senha inválidos."})
+    request.session["user"] = {"id": user["id"], "name": user["name"], "cpf": user["cpf"]}
+    return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
 
-    if os.path.isfile(CSV_FILE):
-        with open(CSV_FILE, newline="", encoding="utf-8") as f:
-            leitor = csv.DictReader(f)
-            for linha in leitor:
-                csv_usuario = linha.get("username", "").strip().lower()
-                csv_senha = linha.get("senha", "").strip()
-                if csv_usuario == username.strip().lower():
-                    usuario_encontrado = True
-                    if csv_senha == senha.strip():
-                        senha_correta = True
-                    break
+@app.get("/logout")
+def logout(request: Request):
+    request.session.pop("user", None)
+    return RedirectResponse(url="/", status_code=status.HTTP_303_SEE_OTHER)
 
-    if not usuario_encontrado or not senha_correta:
-        return templates.TemplateResponse("login.html", {"request": request, "erro": "Usuário ou senha inválidos"})
+@app.get("/noticias", response_class=HTMLResponse)
+def noticias(request: Request):
+    return templates.TemplateResponse("noticias.html", {"request": request})
 
-    return templates.TemplateResponse("dashboard.html", {"request": request, "usuario": username})
+@app.get("/sobre", response_class=HTMLResponse)
+def sobre(request: Request):
+    return templates.TemplateResponse("sobre.html", {"request": request})
+
+

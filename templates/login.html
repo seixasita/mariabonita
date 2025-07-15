@@ -1,20 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
-<div class="container" style="max-width: 400px; margin-top: 50px;">
-  <h2 class="mb-4 text-center">Login</h2>
-  {% if erro %}
-    <div class="alert alert-danger">{{ erro }}</div>
-  {% endif %}
-  <form method="post" action="/login">
-    <div class="mb-3">
-      <label for="username" class="form-label">Nome de usuário</label>
-      <input type="text" class="form-control" id="username" name="username" required>
-    </div>
-    <div class="mb-3">
-      <label for="senha" class="form-label">Senha</label>
-      <input type="password" class="form-control" id="senha" name="senha" required>
-    </div>
-    <button type="submit" class="btn btn-primary w-100">Entrar</button>
-  </form>
-</div>
+<h2>Login</h2>
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+<form method="post" action="/login">
+  <div class="mb-3">
+    <label for="cpf" class="form-label">CPF</label>
+    <input type="text" class="form-control" id="cpf" name="cpf" required pattern="\d{11}" title="Apenas números, 11 dígitos">
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Senha</label>
+    <input type="password" class="form-control" id="password" name="password" required minlength="6">
+  </div>
+  <button type="submit" class="btn btn-outline-success d-inline-flex align-items-center gap-2">Entrar</button>
+</form>
 {% endblock %}
