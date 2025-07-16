@@ -58,7 +58,6 @@
 <section id="featured-services" class="featured-services section light-background">
   <div class="container">
     <div class="row gy-4">
-
       <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
         <div class="service-item position-relative">
           <div class="icon"><i class="bi bi-activity icon"></i></div>
@@ -66,7 +65,6 @@
           <p>Registre e acompanhe os custos da produção de forma simples e eficiente.</p>
         </div>
       </div><!-- End Service Item -->
-
       <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
         <div class="service-item position-relative">
           <div class="icon"><i class="bi bi-bounding-box-circles icon"></i></div>
@@ -74,7 +72,6 @@
           <p>Consultoria especializada em ICMS, obrigações acessórias e regime tributário rural.</p>
         </div>
       </div><!-- End Service Item -->
-
       <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
         <div class="service-item position-relative">
           <div class="icon"><i class="bi bi-calendar4-week icon"></i></div>
@@ -82,7 +79,6 @@
           <p>Organize o dia a dia da fazenda com calendário de atividades e lembretes personalizados.</p>
         </div>
       </div><!-- End Service Item -->
-
       <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
         <div class="service-item position-relative">
           <div class="icon"><i class="bi bi-broadcast icon"></i></div>
@@ -90,77 +86,94 @@
           <p>Use de qualquer lugar, mesmo com internet limitada. Ideal para quem está no campo.</p>
         </div>
       </div><!-- End Service Item -->
+    </div>
+  </div>
+  <!-- Segunda linha com mais 4 serviços -->
+  <div class="row gy-4 mt-2">
+    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="100">
+      <div class="service-item position-relative">
+        <div class="icon"><i class="bi bi-piggy-bank icon"></i></div>
+        <h4><a href="#" class="stretched-link">Gestão Financeira</a></h4>
+        <p>Controle receitas, despesas, fluxo de caixa e resultados financeiros da fazenda.</p>
+      </div>
+    </div>
 
+    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="200">
+      <div class="service-item position-relative">
+        <div class="icon"><i class="bi bi-clipboard-data icon"></i></div>
+        <h4><a href="#" class="stretched-link">Relatórios e Desempenho</a></h4>
+        <p>Acompanhe indicadores de produtividade e eficiência com relatórios fáceis de entender.</p>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="300">
+      <div class="service-item position-relative">
+        <div class="icon"><i class="bi bi-cloud-arrow-up icon"></i></div>
+        <h4><a href="#" class="stretched-link">Backup em Nuvem</a></h4>
+        <p>Seus dados seguros, com backup automático e criptografado na nuvem.</p>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 d-flex" data-aos="fade-up" data-aos-delay="400">
+      <div class="service-item position-relative">
+        <div class="icon"><i class="bi bi-people icon"></i></div>
+        <h4><a href="#" class="stretched-link">Apoio Técnico</a></h4>
+        <p>Equipe de suporte especializada pronta para te ajudar quando precisar.</p>
+      </div>
     </div>
   </div>
 </section><!-- /Featured Services Section -->
 
 
-<!-- About Section -->
-    <section id="about" class="about section">
 
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Sobre Nós</h2>
-        <p>Somos apaixonados por inovação no campo.</p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-        <div class="row gy-4">
-          
-          <div class="col-lg-6 content" data-aos="fade-up" data-aos-delay="200">
-            <h3>A <strong>Fazenda Maria Bonita</strong> nasceu com a missão de apoiar pequenos e médios produtores rurais na modernização da gestão de suas propriedades.</h3>
-            <p class="fst-italic">
-              Acreditamos que a tecnologia pode ser uma aliada poderosa no campo — desde que seja simples, acessível e pensada para a realidade do produtor.
-            </p>
-            <ul>
-              <li><i class="bi bi-check2-all"></i> <span>Sistema leve, funcional mesmo com internet limitada.</span></li>
-              <li><i class="bi bi-check2-all"></i> <span>Interface simples e intuitiva, feita para o dia a dia da fazenda.</span></li>
-              <li><i class="bi bi-check2-all"></i> <span>Cadastro de rebanho, movimentações, nascimentos, vendas, despesas e receitas — tudo em um só lugar.</span></li>
-            </ul>
-            <p>
-              A Fazenda Maria Bonita é mais do que um sistema: é um projeto feito com carinho, que une tradição, conhecimento do campo e tecnologia. Nossa meta é facilitar a vida de quem produz, cuida e alimenta o mundo.
-            </p>
-          </div>
+<!-- Resto da página -->
+{% endblock %}
+{% block footer %}
+<!-- Novo rodapé personalizado para a página index -->
+<!-- Rodapé -->
+  <!-- Rodapé -->
+<footer id="footer" class="footer bg-dark text-light pt-5 pb-4">
+  <div class="container">
+    <div class="row gy-4">
+      <div class="col-lg-5 col-md-12">
+        <h5 style="color: white;" class="text-uppercase fw-bold">Maria Bonita</h5>
+        <p>Um projeto de gestão rural inteligente, feito com carinho para transformar o campo com tecnologia, simplicidade e tradição.</p>
+        <p>Nos acompanhe em nossas redes sociais:</p>
+        <div class="d-flex gap-3">
+          <a href="#" class="text-light"><i class="bi bi-twitter-x"></i></a>
+          <a href="#" class="text-light"><i class="bi bi-facebook"></i></a>
+          <a href="#" class="text-light"><i class="bi bi-instagram"></i></a>
+          <a href="#" class="text-light"><i class="bi bi-linkedin"></i></a>
         </div>
       </div>
 
+      <!-- SERVIÇOS -->
+      <div class="col-lg-3 col-6">
+        <h5 style="color: white;" class="text-uppercase fw-bold">Serviços</h5>
+        <ul class="list-unstyled">
+          <li><a href="#" style="color: white;">Controle de Custos de Produção</a></li>
+          <li><a href="#" style="color: white;">Gestão Financeira da Fazenda</a></li>
+          <li><a href="#" style="color: white;">Consultoria Tributária para o Agro</a></li>
+          <li><a href="#" style="color: white;">Relatórios Gerenciais e de Desempenho</a></li>
+          <li><a href="#" style="color: white;">Sistema Online leve e fácil de usar</a></li>
+        </ul>
       </div>
 
-    </section><!-- /About Section -->
+      <!-- FALE CONOSCO -->
+      <div class="col-lg-4 col-md-12">
+        <h5 style="color: white;" class="text-uppercase fw-bold">Fale Conosco</h5>
+        <p style="color: white;">Esplanada Tower, Setor Sul<br>Brasília - DF</p>
+        <p style="color: white;"><strong>Fone:</strong> +55 61 9999-9999</p>
+        <p style="color: white;"><strong>Email:</strong> contato@mariabonita.com.br</p>
+      </div>
 
-<!-- Resto da página -->
 
-<!-- Mensagens -->
-{# 
-<!-- Mensagens -->
-{% if request.session.get("mensagem") %}
-  <div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ request.session.mensagem }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fechar"></button>
-  </div>
-  {% set _ = request.session.update({'mensagem': None}) %}
-{% endif %}
+    <hr class="my-4 border-light" />
 
-<!-- Área de Login ou Boas-vindas -->
-<div class="my-4 text-center">
-  {% if user %}
-    <p class="lead">Você está logado como <strong>{{ user.name }}</strong> (CPF: {{ user.cpf }})</p>
-  {% else %}
-    <p class="lead">Por favor, faça login ou cadastre-se para continuar.</p>
-
-    <div class="d-flex justify-content-center gap-3 mt-3">
-      <a href="/login" class="btn btn-success d-inline-flex align-items-center gap-2">
-        <i class="bi bi-box-arrow-in-right"></i>
-        Login
-      </a>
-      <a href="/cadastro" class="btn btn-outline-success d-inline-flex align-items-center gap-2">
-        <i class="bi bi-person-plus"></i>
-        Criar conta
-      </a>
+    <div class="text-center">
+      <p class="mb-0">&copy; 2025 <strong>Fazenda Maria Bonita</strong>. Todos os direitos reservados.</p>
     </div>
-  {% endif %}
-</div>
-#}
+  </div>
+</footer>
 
 {% endblock %}

@@ -163,9 +163,12 @@ def noticias(request: Request):
     return templates.TemplateResponse("noticias.html", {"request": request})
 
 @app.get("/sobre", response_class=HTMLResponse)
-def sobre(request: Request):
-    return templates.TemplateResponse("sobre.html", {"request": request})
-
+async def sobre(request: Request):
+    user = request.session.get("user")  # ou use o sistema de autenticação que estiver usando
+    return templates.TemplateResponse("sobre.html", {
+        "request": request,
+        "user": user
+    })
 
 @app.get("/teste", response_class=HTMLResponse)
 def teste_navbar(request: Request):
