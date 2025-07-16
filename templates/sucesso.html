@@ -1,11 +1,21 @@
-{% extends "base.html" %}
+{% extends "clean_base.html" %}
+
+{% block title %}Sucesso Cadastro{% endblock %}
+
 {% block content %}
-<div class="text-center mt-5">
-  <h2>Cadastro realizado com sucesso! 🎉</h2>
-  <p>Obrigado por se cadastrar na Fazenda Maria Bonita.</p>
-  <a href="/" class="btn btn-primary mt-3">Voltar para a página inicial</a>
-</div>
-<div class="alert alert-success" role="alert">
-  Cadastro realizado com sucesso!
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card shadow-lg p-4 rounded" style="max-width: 500px; width: 100%;">
+    <div class="text-center">
+      <!-- Ícone de sucesso -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" fill="green" class="bi bi-check-circle mb-3" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm3.354-9.354a.5.5 0 1 1 .708.708L7.707 10.707a.5.5 0 0 1-.708 0L4.646 8.354a.5.5 0 1 1 .708-.708L7 9.293l4.354-4.647z"/>
+      </svg>
+
+      <h2 class="mb-3 text-success">Cadastro realizado com sucesso!</h2>
+      <p class="mb-4">Obrigado por se cadastrar na <strong>Fazenda Maria Bonita</strong>. Agora você pode aproveitar todos os recursos do nosso sistema.</p>
+      <a href="/" class="btn btn-success btn-lg px-5">Voltar para a página inicial</a>
+    </div>
+  </div>
 </div>
 {% endblock %}
+

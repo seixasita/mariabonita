@@ -1,0 +1,12 @@
+{% extends "clean_base.html" %}
+
+{% block title %}Perfil do Usuário{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>Olá, {{ user.name }}!</h2>
+  <p><strong>CPF:</strong> {{ user.cpf }}</p>
+  <p>Esta é sua área privada onde você pode ver seus dados e gerenciar sua conta.</p>
+  <a href="/" class="btn btn-secondary">Voltar à Home</a>
+</div>
+{% endblock %}
