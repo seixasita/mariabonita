@@ -7,6 +7,11 @@ from passlib.context import CryptContext
 from starlette.middleware.sessions import SessionMiddleware
 import sqlite3
 import re
+from fastapi import UploadFile, File
+import pandas as pd
+from io import BytesIO
+from datetime import datetime, timedelta
+
 
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="supersecretkey")
@@ -217,5 +222,119 @@ def adicionar_custo(request: Request,
     conn.close()
 
     return RedirectResponse(url="/custos", status_code=status.HTTP_303_SEE_OTHER)
+
+from fastapi import UploadFile, File
+import pandas as pd
+from io import BytesIO
+
+@app.post("/upload-custos")
+def upload_custos(request: Request, file: UploadFile = File(...)):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url="/login", status_code=303)
+
+    contents = file.file.read()
+    df = pd.read_excel(BytesIO(contents))
+
+    # Espera colunas exatas com esses nomes:
+    required_columns = {'Data', 'Tipo de Custo', 'Categoria', 'Valor (R$)', 'Observações'}
+    if not required_columns.issubset(df.columns):
+        return templates.TemplateResponse("custos.html", {
+            "request": request,
+            "user": user,
+            "error": "Planilha inválida. Certifique-se de que as colunas estão corretas.",
+            "custos": []
+        })
+
+    conn = get_db()
+    for _, row in df.iterrows():
+        conn.execute("""
+            INSERT INTO custos (user_id, data, tipo_custo, categoria, valor, observacoes)
+            VALUES (?, ?, ?, ?, ?, ?)
+        """, (
+            user["id"],
+            str(row['Data']),
+            str(row['Tipo de Custo']),
+            str(row['Categoria']),
+            float(row['Valor (R$)']),
+            str(row.get('Observações', ''))
+        ))
+    conn.commit()
+    conn.close()
+
+    return RedirectResponse(url="/custos", status_code=303)
+
+@app.get("/relatorio_custos", response_class=HTMLResponse)
+def relatorio_custos(request: Request, filtro: str = "30", data_inicio: str = "", data_fim: str = ""):
+    user = request.session.get("user")
+    if not user:
+        return RedirectResponse(url="/login", status_code=status.HTTP_303_SEE_OTHER)
+
+    from datetime import datetime, timedelta
+
+    conn = get_db()
+
+    hoje = datetime.today().date()
+
+    if filtro == "todos":
+        query = "SELECT * FROM custos WHERE user_id = ?"
+        params = (user["id"],)
+    elif filtro == "personalizado" and data_inicio and data_fim:
+        query = "SELECT * FROM custos WHERE user_id = ? AND data BETWEEN ? AND ?"
+        params = (user["id"], data_inicio, data_fim)
+    else:
+        try:
+            dias = int(filtro)
+            data_limite = hoje - timedelta(days=dias)
+            query = "SELECT * FROM custos WHERE user_id = ? AND data >= ?"
+            params = (user["id"], data_limite.isoformat())
+        except ValueError:
+            # Se filtro for inválido, assume todos
+            query = "SELECT * FROM custos WHERE user_id = ?"
+            params = (user["id"],)
+
+    custos = conn.execute(query, params).fetchall()
+    conn.close()
+
+    # Cálculo de totais
+    totais_categoria = {}
+    totais_tipo = {}
+    total_geral = 0
+
+    for custo in custos:
+        categoria = custo["categoria"]
+        tipo = custo["tipo_custo"]
+        valor = custo["valor"]
+
+        totais_categoria[categoria] = totais_categoria.get(categoria, 0) + valor
+        totais_tipo[tipo] = totais_tipo.get(tipo, 0) + valor
+        total_geral += valor
+
+    return templates.TemplateResponse("relatorio_custos.html", {
+        "request": request,
+        "user": user,
+        "custos": custos,
+        "totais_categoria": totais_categoria,
+        "totais_tipo": totais_tipo,
+        "total_geral": total_geral,
+        "filtro": filtro,
+        "data_inicio": data_inicio,
+        "data_fim": data_fim
+    })
+
+# formato brasileiro moeda
+import locale
+
+# Define localidade para formato brasileiro
+locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+
+# Filtro personalizado para Jinja2
+def format_brl(value):
+    try:
+        return locale.currency(value, symbol=True, grouping=True)
+    except:
+        return f"R$ {value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+templates.env.filters["format_brl"] = format_brl
 
 

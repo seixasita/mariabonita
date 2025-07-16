@@ -1,0 +1,143 @@
+{% extends "clean_base.html" %}
+{% block title %}Relatório de Custos{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+  <!-- Filtro de Datas -->
+  <form method="get" action="/relatorio_custos" class="row g-3 mb-4 align-items-end">
+    <div class="col-md-3">
+      <label for="filtro" class="form-label">Filtro Rápido</label>
+      <select name="filtro" id="filtro" class="form-select" onchange="this.form.submit()">
+        <option value="30" {% if filtro == '30' %}selected{% endif %}>Últimos 30 dias</option>
+        <option value="90" {% if filtro == '90' %}selected{% endif %}>Últimos 3 meses</option>
+        <option value="365" {% if filtro == '365' %}selected{% endif %}>Último ano</option>
+        <option value="personalizado" {% if filtro == 'personalizado' %}selected{% endif %}>Período personalizado</option>
+        <option value="todos" {% if filtro == 'todos' %}selected{% endif %}>Todos os registros</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <label for="data_inicio" class="form-label">De</label>
+      <input type="date" class="form-control" name="data_inicio" value="{{ data_inicio }}">
+    </div>
+    <div class="col-md-3">
+      <label for="data_fim" class="form-label">Até</label>
+      <input type="date" class="form-control" name="data_fim" value="{{ data_fim }}">
+    </div>
+    <div class="col-md-3">
+      <button type="submit" class="btn btn-success w-100">Aplicar Filtro</button>
+    </div>
+  </form>
+<!-- Cards de Totais -->
+<div class="row text-center mb-4">
+  <div class="col-md-4">
+    <div class="card text-white bg-success shadow" style="height: 220px;">
+      <div class="card-body d-flex flex-column justify-content-center">
+        <h5 class="card-title">Total Geral</h5>
+        <p class="display-6">{{ total_geral|format_brl }}</p>
+      </div>
+    </div>
+  </div>
+<!-- Tabela Categoria--> 
+  <div class="col-md-4">
+    <div class="card bg-light shadow">
+      <div class="card-body">
+        <h5 class="card-title">Custos por Categoria</h5>
+        <table id="tabela-categorias" class="table table-bordered table-sm">
+          <thead>
+            <tr>
+              <th class="text-start">Categoria</th>
+              <th>Total (R$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for categoria, valor in totais_categoria.items() %}
+              <tr>
+                <td class="text-start">{{ categoria }}</td>
+                <td class="text-start">{{ valor|format_brl }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<!-- Tabela Tipo--> 
+  <div class="col-md-4">
+    <div class="card bg-light shadow">
+      <div class="card-body">
+        <h5 class="card-title">Custos por Tipo</h5>
+        <table id="tabela-tipos" class="table table-bordered table-sm">
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Total (R$)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for tipo, valor in totais_tipo.items() %}
+              <tr>
+                <td class="text-start">{{ tipo }}</td>
+                <td class="text-start">{{ valor|format_brl }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- JSON invisível para os dados -->
+  <script id="dadosCategoria" type="application/json">{{ totais_categoria | tojson }}</script>
+  <script id="dadosTipo" type="application/json">{{ totais_tipo | tojson }}</script>
+
+  <!-- Gráficos -->
+  <div class="row mb-5">
+    <div class="col-md-6">
+      <canvas id="graficoCategoria" style="width:100%; height:300px;"></canvas>
+    </div>
+    <div class="col-md-6">
+      <canvas id="graficoTipo" style="width:100%; height:300px;"></canvas>
+    </div>
+  </div>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="/static/assets/js/relatorio_custos.js"></script>
+  
+<!-- Tabela de Detalhamento -->
+  <h4 class="mt-5">Detalhamento dos Custos</h4>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Data</th>
+          <th>Tipo de Custo</th>
+          <th>Categoria</th>
+          <th>Valor (R$)</th>
+          <th>Observações</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for custo in custos %}
+          <tr>
+            <td>{{ custo.data }}</td>
+            <td>{{ custo.tipo_custo }}</td>
+            <td>{{ custo.categoria }}</td>
+            <td>{{ custo.valor|format_brl }}</td>
+            <td>{{ custo.observacoes or '-' }}</td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="5" class="text-center text-muted">Nenhum custo registrado neste período.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+
+
+
+{% endblock %}

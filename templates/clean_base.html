@@ -4,11 +4,15 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}Fazenda Maria Bonita{% endblock %}</title>
-
+  <!-- Favicon -->
+  <link rel="icon" href="{{ url_for('static', path='assets/img/favicon.png') }}" type="image/png" />
   <!-- Estilos e fontes -->
   <link href="/static/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
   <link href="/static/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
   <link href="/static/assets/css/main.css" rel="stylesheet" />
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+
 </head>
 <body>
 
@@ -19,8 +23,8 @@
       <div class="topbar d-flex align-items-center accent-background">
         <div class="container d-flex justify-content-center justify-content-md-between">
           <div class="contact-info d-flex align-items-center">
-            <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
-            <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+            <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contato@mariabonita.com.br</a></i>
+            <i class="bi bi-phone d-flex align-items-center ms-4"><span>+55 61 9999 9999</span></i>
           </div>
           <div class="social-links d-none d-md-flex align-items-center">
             <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
@@ -46,7 +50,6 @@
             <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
             <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
             <li class="nav-item"><a class="nav-link" href="#portfolio">Portfolio</a></li>
-            <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
 
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,7 +81,9 @@
                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
                   <li><a class="dropdown-item" href="/perfil">Perfil</a></li>
                   <li><a class="dropdown-item" href="/custos">Custos</a></li>
+                  <li><a class="dropdown-item" href="/relatorio_custos">Relatório</a></li>
                   <li><a class="dropdown-item" href="/logout">Sair</a></li>
+                </ul>
                 </ul>
               </li>
             {% else %}
@@ -102,16 +107,29 @@
     </footer>
 
   </div>
-  {% if user %}
-    <li><a href="/perfil">Perfil</a></li>
-    <li><a href="/custos">Custos</a></li>
-    <li><a href="/logout">Sair</a></li>
-  {% else %}
-    <li><a href="/login">Login</a></li>
-    <li><a href="/cadastro">Cadastrar</a></li>
-  {% endif %}
+  
+  
 
   <!-- Scripts -->
   <script src="/static/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- jQuery + DataTables JS -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+  
+  <!-- DataTables CSS -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+  <!-- DataTables JS + Bootstrap 5 -->
+  <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+  <!-- jQuery (necessário para DataTables) -->
+  <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+  
+  <script src="/static/assets/js/relatorio_custos.js"></script>
+
 </body>
 </html>
