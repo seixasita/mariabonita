@@ -326,14 +326,13 @@ def relatorio_custos(request: Request, filtro: str = "30", data_inicio: str = ""
 import locale
 
 # Define localidade para formato brasileiro
-locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
+#locale.setlocale(locale.LC_ALL, 'pt_BR.UTF-8')
 
 # Filtro personalizado para Jinja2
 def format_brl(value):
-    try:
-        return locale.currency(value, symbol=True, grouping=True)
-    except:
-        return f"R$ {value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+    return f"R$ {value:,.2f}".replace(",", "X").replace(".", ",").replace("X", ".")
+
+
 
 templates.env.filters["format_brl"] = format_brl
 
